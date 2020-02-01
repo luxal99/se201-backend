@@ -1,12 +1,12 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.TipServisa;
+import com.example.demo.dto.ServisDTO;
 import com.example.demo.entity.Servis;
-import com.example.demo.entity.ServisKlime;
-import org.springframework.data.relational.core.sql.In;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public interface KlijentInterface {
-    public String zakaziServis(Servis servis,Integer tip,String username,String password) throws SQLException;
+    public String zakaziServis(Servis servis, Integer tip, String username, String password) throws SQLException;
+    public List<ServisDTO> getAllService(String username, String password);
 }

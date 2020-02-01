@@ -1,12 +1,13 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.TipServisa;
+import com.example.demo.controller.SlobodniTermin;
+import com.example.demo.dto.ServisDTO;
 import com.example.demo.entity.*;
-import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Service;
-import sun.nio.cs.KOI8_R;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ServisControllerImpl implements RegistrationService, KlijentInterface, ServiceInterface {
@@ -114,6 +115,52 @@ public class ServisControllerImpl implements RegistrationService, KlijentInterfa
     }
 
     @Override
+    public List<ServisDTO> getAllService(String username, String password) {
+        List<ServisDTO> servisDTOList = new ArrayList<>();
+        try {
+            openConection();
+            PreparedStatement preparedStatement = connection.prepareStatement("select date, time, car, car_model, sk.id_ac_service, ms.id_mehanic_service, su.id_oil_service\n" +
+                    "from servis\n" +
+                    "         left outer join klijent k on servis.id_client = k.id_client\n" +
+                    "         left outer join servis_klime sk on servis.id_service = sk.id_service\n" +
+                    "         left outer join mehanicki_servis ms on servis.id_service = ms.id_service\n" +
+                    "         left outer join servis_ulja su on servis.id_service = su.id_service\n" +
+                    "where k.id_client = (select k2.id_client\n" +
+                    "                     from car_service.korisnik\n" +
+                    "                              join klijent k2 on korisnik.id_client = k2.id_client\n" +
+                    "                     where username = ?\n" +
+                    "                       and password = ?);");
+            preparedStatement.setString(1,username);
+            preparedStatement.setString(2,password);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                ServisDTO servisDTO = new ServisDTO();
+                servisDTO.setDate(resultSet.getString(1));
+                servisDTO.setType(resultSet.getString(2));
+                servisDTO.setCar(resultSet.getString(3));
+                servisDTO.setCarModel(resultSet.getString(4));
+                servisDTO.setIdServisKlime(resultSet.getLong(5));
+                servisDTO.setIdMehanickiServis(resultSet.getLong(6));
+                servisDTO.setIdServisUlja(resultSet.getLong(7));
+
+                if (servisDTO.getIdServisUlja()!=0){
+                    servisDTO.setType("Servis ulja");
+                }else if(servisDTO.getIdServisKlime()!=0){
+                    servisDTO.setType("Servis klime");
+                }else if(servisDTO.getIdMehanickiServis()!=0){
+                    servisDTO.setType("Mehanicki servis");
+                }
+                servisDTOList.add(servisDTO);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return servisDTOList;
+    }
+
+    @Override
     public Klijent findClient(String username, String password) throws SQLException {
         Klijent klijent = new Klijent();
         try {
@@ -138,5 +185,27 @@ public class ServisControllerImpl implements RegistrationService, KlijentInterfa
             connection.close();
         }
         return klijent;
+    }
+
+    @Override
+    public List<SlobodniTermin> dosputniTermini() {
+        List<SlobodniTermin> slobodniTerminList = new ArrayList<>();
+        try {
+            openConection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * from car_service.available_service");
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                SlobodniTermin slobodniTermin = new SlobodniTermin();
+                slobodniTermin.setIdAvailableService(resultSet.getLong(1));
+                slobodniTermin.setDate(resultSet.getString(2));
+                slobodniTermin.setTime(resultSet.getString(3));
+
+                slobodniTerminList.add(slobodniTermin);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return slobodniTerminList;
     }
 }

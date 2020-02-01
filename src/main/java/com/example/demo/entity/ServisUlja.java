@@ -4,9 +4,18 @@ import java.sql.Time;
 import java.util.Date;
 
 public class ServisUlja extends Servis{
+    private Long idOilService;
     private String vrstaUlja;
 
     public ServisUlja() {
+    }
+
+    public Long getIdOilService() {
+        return idOilService;
+    }
+
+    public void setIdOilService(Long idOilService) {
+        this.idOilService = idOilService;
     }
 
     public String getVrstaUlja() {

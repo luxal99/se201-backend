@@ -6,9 +6,18 @@ import java.util.Date;
 import java.util.List;
 
 public class MehanickiServis extends Servis {
+    private Long idMehanicService;
     List<Deo> listaDelova = new ArrayList<>();
 
     public MehanickiServis() {
+    }
+
+    public Long getIdMehanicService() {
+        return idMehanicService;
+    }
+
+    public void setIdMehanicService(Long idMehanicService) {
+        this.idMehanicService = idMehanicService;
     }
 
     public List<Deo> getListaDelova() {

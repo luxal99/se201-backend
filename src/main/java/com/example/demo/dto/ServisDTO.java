@@ -7,9 +7,9 @@ import com.example.demo.entity.ServisUlja;
 
 public class ServisDTO {
     private Long idService;
-    private ServisKlime idServisKlime;
-    private ServisUlja idServisUlja;
-    private MehanickiServis idMehanickiServis;
+    private Long idServisKlime;
+    private Long idServisUlja;
+    private Long idMehanickiServis;
     private String date;
     private String time;
     private String type;
@@ -28,27 +28,27 @@ public class ServisDTO {
         this.idService = idService;
     }
 
-    public ServisKlime getIdServisKlime() {
+    public Long getIdServisKlime() {
         return idServisKlime;
     }
 
-    public void setIdServisKlime(ServisKlime idServisKlime) {
+    public void setIdServisKlime(Long idServisKlime) {
         this.idServisKlime = idServisKlime;
     }
 
-    public ServisUlja getIdServisUlja() {
+    public Long getIdServisUlja() {
         return idServisUlja;
     }
 
-    public void setIdServisUlja(ServisUlja idServisUlja) {
+    public void setIdServisUlja(Long idServisUlja) {
         this.idServisUlja = idServisUlja;
     }
 
-    public MehanickiServis getIdMehanickiServis() {
+    public Long getIdMehanickiServis() {
         return idMehanickiServis;
     }
 
-    public void setIdMehanickiServis(MehanickiServis idMehanickiServis) {
+    public void setIdMehanickiServis(Long idMehanickiServis) {
         this.idMehanickiServis = idMehanickiServis;
     }
 
@@ -99,5 +99,4 @@ public class ServisDTO {
     public void setKlijent(Klijent klijent) {
         this.klijent = klijent;
     }
-
 }

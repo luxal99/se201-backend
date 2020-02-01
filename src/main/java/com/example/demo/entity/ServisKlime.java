@@ -8,6 +8,10 @@ public class ServisKlime extends Servis {
     private Integer kolicinaGasa;
     private Servis servis;
 
+    public Long getIdServisKlime() {
+        return idServisKlime;
+    }
+
     public Servis getServis() {
         return servis;
     }

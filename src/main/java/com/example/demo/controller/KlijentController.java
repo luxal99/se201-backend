@@ -1,8 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.TipServisa;
 import com.example.demo.entity.Servis;
-import com.example.demo.entity.ServisKlime;
 import com.example.demo.service.KlijentInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +18,11 @@ public class KlijentController {
     @PostMapping("scheduleItService/{tip}/{username}/{password}")
     public ResponseEntity scheduleItService(@RequestBody Servis servis,@PathVariable Integer tip,@PathVariable String username,@PathVariable String password) throws SQLException {
         return ResponseEntity.ok(klijentInterface.zakaziServis(servis,tip,username,password));
+    }
+
+    @GetMapping("getAllServices/{username}/{password}")
+    public ResponseEntity getAllServices(@PathVariable String username,@PathVariable String password){
+        return ResponseEntity.ok(klijentInterface.getAllService(username,password));
     }
 
 
