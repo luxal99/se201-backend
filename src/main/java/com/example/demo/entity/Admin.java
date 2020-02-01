@@ -1,31 +1,12 @@
 package com.example.demo.entity;
 
-public class Klijent extends Korisnik {
-    private Long idKlijent;
-    private String telephone;
-
-    public Klijent() {
-    }
-
-    public Long getIdKlijent() {
-        return idKlijent;
-    }
-
-    public void setIdKlijent(Long idKlijent) {
-        this.idKlijent = idKlijent;
+public class Admin extends Korisnik {
+    public Admin() {
     }
 
     @Override
     public Long getIdKorisnik() {
         return super.getIdKorisnik();
-    }
-
-    public String getTelephone() {
-        return telephone;
-    }
-
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
     }
 
     @Override
